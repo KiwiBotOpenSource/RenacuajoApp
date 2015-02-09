@@ -1,13 +1,11 @@
-/* Vehiculo controlado por app
- Creado por Ramón Arjona Quiñones y Andrea Fernández García, 4ºESO del instituto IES Vicente Aleixandre, Sevilla
- Profesor: José Pujol 
- 
- El programa funciona como un coche teledirigido desde el móvil, que envía bits a Arduino para que el coche funcione. Hecho con el software y hardware libre de Arduino.*/
+/* Vehiculo controlado por APP
+ Creado por Jose Pujol y Alberto Pumar
+ */
 
 
 // Pines de servotores:
-int servoLPin = 4; //Los cuatro “in” son  los pines a los que va conectado el motor driver
-int servoRPin=8;
+int servoLPin = 4; // Pin Sevomotor Izquierdo
+int servoRPin=8;   // Pin Sevomotor Derecho
 
 // Variables de comunicacion:
 
