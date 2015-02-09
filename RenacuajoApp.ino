@@ -4,9 +4,17 @@
  */
 
 
-// Pines de servotores:
+// conexiones pines
 int servoLPin = 4; // Pin Sevomotor Izquierdo
 int servoRPin=8;   // Pin Sevomotor Derecho
+const int buzzerPin =  10;
+const int ledPinR = 6;
+const int ledPinG = 5;
+const int ledPinB = 9;
+
+// Variables de estado
+int buzzerstate=L; // estado del zumbador LOW
+int ledstate=l; // estado del LED low
 
 // Variables de comunicacion:
 
@@ -16,6 +24,10 @@ int incomingByte; //Último bit recibido
 void setup() {
   pinMode (servoRPin, OUTPUT);
   pinMode (servoLPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(ledPinR, OUTPUT);
+  pinMode(ledPinG, OUTPUT);
+  pinMode(ledPinB, OUTPUT);
   Serial.begin(9600); //Establece conexión con el puerto serie
 }
 void go_forward(){ //Rutina para que el coche avance
@@ -77,8 +89,32 @@ void loop() {
   if (incomingByte == 's') { //Si es “s”  (no se pulsa nada),
     parar();  //El coche se para.
   }
+  if (ch == 'h') {  
+    buzzerstate = 'h';   
+  } 
+  if (ch == 'l'){         
+    buzzerstate = 'l';
+  }
+  if (ch == 'H') {  
+    ledstate = 'H';   
+  } 
+  if (ch == 'L'){         
+    ledstate = 'L';
+  }
+  if (buzzerstate == 'h') {
+    digitalWrite(buzzerPin, HIGH);
+  }
+  else{
+    digitalWrite(buzzerPin, LOW);
+  }
+  if (ledstate == 'H') {
+    digitalWrite(ledPinR, HIGH);
+    digitalWrite(ledPinG, HIGH);
+    digitalWrite(ledPinB, HIGH);
+  }
+  else{
+    digitalWrite(ledPinR, LOW);
+    digitalWrite(ledPinG, LOW);
+    digitalWrite(ledPinB, LOW);
+  }
 } 
-
-
-
-
