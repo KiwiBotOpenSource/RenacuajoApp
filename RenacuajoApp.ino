@@ -89,32 +89,5 @@ void loop() {
   if (incomingByte == 's') { //Si es “s”  (no se pulsa nada),
     parar();  //El coche se para.
   }
-  if (ch == 'h') {  
-    buzzerstate = 'h';   
-  } 
-  if (ch == 'l'){         
-    buzzerstate = 'l';
-  }
-  if (ch == 'H') {  
-    ledstate = 'H';   
-  } 
-  if (ch == 'L'){         
-    ledstate = 'L';
-  }
-  if (buzzerstate == 'h') {
-    digitalWrite(buzzerPin, HIGH);
-  }
-  else{
-    digitalWrite(buzzerPin, LOW);
-  }
-  if (ledstate == 'H') {
-    digitalWrite(ledPinR, HIGH);
-    digitalWrite(ledPinG, HIGH);
-    digitalWrite(ledPinB, HIGH);
-  }
-  else{
-    digitalWrite(ledPinR, LOW);
-    digitalWrite(ledPinG, LOW);
-    digitalWrite(ledPinB, LOW);
-  }
+
 } 
