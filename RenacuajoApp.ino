@@ -15,8 +15,8 @@ const int ledPinB = 9;
 
 // Variables de comunicacion:
 
-int incomingByte; //Último bit recibido
-                   // Cuando no recibe ningun dato nuevo se pone a 10
+int incomingByte; //// variable para almacenar los datos 
+                      // que entran por el puerto serie 
 
 void setup() {
   pinMode (servoRPin, OUTPUT);
@@ -67,8 +67,8 @@ void parar(){ //Rutina para que el cohe pare
   digitalWrite(servoLPin,LOW);
 }
 void loop() {
-
-  if (Serial.available() > 0) { //Si recibe datos,
+//Si hay datos puerto serie
+  if (Serial.available() > 0) { 
     incomingByte = Serial.read(); //Acumula el último byte en incomingByte
   }
   if (incomingByte == 'f') { //SI es “f” (botón de arriba)  
@@ -83,7 +83,7 @@ void loop() {
   if (incomingByte == 'l') { //Si es “l” (botón de la izquierda), 
     turn_left(); //Gira a la izquierda
   }
-  if (incomingByte == 's') { //Si es “s”  (no se pulsa nada),
+  if (incomingByte == 's') { //Si es “s”  (al sotar cualquier boton),
     parar();  //El coche se para.
   }
 
