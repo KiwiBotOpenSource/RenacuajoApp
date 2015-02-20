@@ -6,15 +6,12 @@
 
 // conexiones pines
 int servoLPin = 4; // Pin Sevomotor Izquierdo
-int servoRPin=8;   // Pin Sevomotor Derecho
+int servoRPin=7;   // Pin Sevomotor Derecho
 const int buzzerPin =  10;
 const int ledPinR = 6;
 const int ledPinG = 5;
 const int ledPinB = 9;
 
-// Variables de estado
-int buzzerstate=L; // estado del zumbador LOW
-int ledstate=l; // estado del LED low
 
 // Variables de comunicacion:
 
