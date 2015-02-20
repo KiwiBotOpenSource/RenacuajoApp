@@ -5,8 +5,9 @@
 
 
 // conexiones pines
-int servoLPin = 4; // Pin Sevomotor Izquierdo
-int servoRPin=7;   // Pin Sevomotor Derecho
+const int servoLPin = 4; // Pin Sevomotor Izquierdo
+const int servoRPin=7;   // Pin Sevomotor Derecho
+
 const int buzzerPin =  10;
 const int ledPinR = 6;
 const int ledPinG = 5;
