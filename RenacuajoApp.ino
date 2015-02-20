@@ -1,5 +1,5 @@
 /* Vehiculo controlado por APP
- Programa para controlar vehiculo movido por servomotores
+ Programa para controlar vehiculo desde APP movido por servomotores
  Creado por Jose Pujol y Alberto Pumar
  */
 
