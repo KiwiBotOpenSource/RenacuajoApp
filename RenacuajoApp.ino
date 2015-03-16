@@ -1,91 +1,132 @@
-/* Vehiculo controlado por APP
- Programa para controlar vehiculo desde APP movido por servomotores
- Creado por Jose Pujol y Alberto Pumar
- */
+/*
+VEHÍCULO CONTROLADO POR APP
+Programa para control de printbot kiwibot por APP y HC06.
+Desarrollado por Miguel Granero, Jose Pujol y Alberto Pumar.
+Marzo 2015
+*/
 
-
-// conexiones pines
-const int servoLPin = 4; // Pin Sevomotor Izquierdo
-const int servoRPin=7;   // Pin Sevomotor Derecho
-
-const int buzzerPin =  10;
+// LEDS
 const int ledPinR = 6;
 const int ledPinG = 5;
 const int ledPinB = 9;
 
+//Timbre
+const int buzzerPin = 10;
 
-// Variables de comunicacion:
+//Pines de los servos
+const int M7 = 7;
+const int M4 = 4;
 
-int incomingByte; //// variable para almacenar los datos 
-                      // que entran por el puerto serie 
+// lee el puerto serial
+int ch;
+
+//Memoria
+int memory;
 
 void setup() {
-  pinMode (servoRPin, OUTPUT);
-  pinMode (servoLPin, OUTPUT);
-  pinMode(buzzerPin, OUTPUT);
-  pinMode(ledPinR, OUTPUT);
-  pinMode(ledPinG, OUTPUT);
-  pinMode(ledPinB, OUTPUT);
-  Serial.begin(9600); //Establece conexión con el puerto serie
+  Serial.begin(9600);
+  pinMode(M7, OUTPUT);
+  pinMode(M4, OUTPUT);
 }
-void go_forward(){ //Rutina para que el coche avance
-  //gira adelante
-  digitalWrite(servoRPin,HIGH);
-  digitalWrite(servoLPin,HIGH);
+
+void backward() {
+  digitalWrite(M4, HIGH);
+  digitalWrite(M7, HIGH);
   delayMicroseconds(1000);
-  digitalWrite(servoRPin,LOW);
+  digitalWrite(M4, LOW);
   delayMicroseconds(1000);
-  digitalWrite(servoLPin,LOW);
+  digitalWrite(M7, LOW);
   delayMicroseconds(18000);
 }
-void go_back(){ //Rutina para que el coche retroceda
-  digitalWrite(servoRPin,HIGH);
-  digitalWrite(servoLPin,HIGH);
-  delayMicroseconds(1000);// 1 - 1500 atras, de 1500 a 3000 delante 
-  digitalWrite(servoLPin,LOW);
+
+void frontwards() {
+  digitalWrite(M7, HIGH);
+  digitalWrite(M4, HIGH);
   delayMicroseconds(1000);
-  digitalWrite(servoRPin,LOW);
+  digitalWrite(M7, LOW);
+  delayMicroseconds(1000);
+  digitalWrite(M4, LOW);
   delayMicroseconds(18000);
 }
-void turn_left(){ //Rutina para que el coche gire a la derecha
-  digitalWrite(servoRPin,HIGH);
-  digitalWrite(servoLPin,HIGH);
-  delayMicroseconds(2000);// 1 - 1500 atras, de 1500 a 3000 delante 
-  digitalWrite(servoRPin,LOW);
-  digitalWrite(servoLPin,LOW);
+
+void left(){
+  digitalWrite(M7, HIGH);
+  digitalWrite(M4, HIGH);
+  delayMicroseconds(2000);
+  digitalWrite(M7, LOW);
+  digitalWrite(M4, LOW);
   delayMicroseconds(18000);
 }
-void turn_right(){ //Rutina para que el coche gire a la izquierda
-  digitalWrite(servoRPin,HIGH);
-  digitalWrite(servoLPin,HIGH);
-  delayMicroseconds(1000);// 1 - 1500 atras, de 1500 a 3000 delante 
-  digitalWrite(servoRPin,LOW);
-  digitalWrite(servoLPin,LOW);
+
+void right(){
+  digitalWrite(M7, HIGH);
+  digitalWrite(M4, HIGH);
+  delayMicroseconds(1000);
+  digitalWrite(M7, LOW);
+  digitalWrite(M4, LOW);
   delayMicroseconds(19000);
 }
-void parar(){ //Rutina para que el cohe pare
-  digitalWrite(servoRPin,LOW);
-  digitalWrite(servoLPin,LOW);
-}
-void loop() {
-//Si hay datos puerto serie
-  if (Serial.available() > 0) { 
-    incomingByte = Serial.read(); //Acumula el último byte en incomingByte
-  }
-  if (incomingByte == 'f') { //SI es “f” (botón de arriba)  
-    go_forward(); //Va hacia alante 
-  }
-  if (incomingByte == 'b') { //Si es “b” (botón de abajo),
-    go_back(); //Va hacia atrás
-  }
-  if (incomingByte == 'r') { //Si es “r” (botón de la derecha);
-    turn_right(); //Gira a la derecha
-  }
-  if (incomingByte == 'l') { //Si es “l” (botón de la izquierda), 
-    turn_left(); //Gira a la izquierda
-  }
-  if (incomingByte == 's') { //Si es “s”  (al sotar cualquier boton),
-    parar();  //El coche se para.
-  }
 
-} 
+void stopA() {
+  digitalWrite(M7, LOW);
+  digitalWrite(M4, LOW);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    ch = Serial.read(); // Fijamos la variable ch a lo que lea en el serial
+}
+//Asociamos la memoria a estos codigos que indican la direccion del motor
+  if (ch == 'S') { 
+    memory = 'S';
+  }
+  if (ch == 'l') {
+    memory = 'l';
+  }
+  if (ch == 'r') {
+    memory = 'r';
+  }
+  if (ch == 'b') {
+    memory = 'b'; 
+  }
+  if (ch == 's') {
+    memory = 's';
+  }
+  
+//Aqui hacemos con los motores lo que hayamos recibido por el serial, como hemos fijado arriba
+  if (memory == 's') {
+    stopA();
+  }
+  if (memory == 'f') {
+    frontwards();
+  }
+  if (memory == 'l') {
+    left();
+  }
+  if (memory == 'b') {
+    backward();
+  }
+  if (memory == 'r') {
+    right();
+  }
+  //Aqui encendemos totalmente los LEDs
+   if (ch == 'H') {
+    analogWrite(ledPinR, 255);
+    analogWrite(ledPinG, 255);
+    analogWrite(ledPinB, 255);
+  }
+//Aqui apagamos los LEDs 
+  if (ch == 'L') {
+    analogWrite(ledPinR, 0);
+    analogWrite(ledPinG, 0);
+    analogWrite(ledPinB, 0);
+  }
+//En los proximos 2 bloques encendemos o apagamos el timbre
+  if (ch == 'Z') {
+    digitalWrite(buzzerPin, HIGH);//Estos para el timbre
+  }
+  if (ch == 'z') {
+    digitalWrite(buzzerPin, LOW);
+  }
+  delay(15);
+}
