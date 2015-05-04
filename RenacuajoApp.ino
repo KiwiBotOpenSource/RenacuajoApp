@@ -77,8 +77,8 @@ void loop() {
     ch = Serial.read(); // Fijamos la variable ch a lo que lea en el serial
 }
 //Asociamos la memoria a estos codigos que indican la direccion del motor
-  if (ch == 'S') { 
-    memory = 'S';
+  if (ch == 'f') { 
+    memory = 'f';
   }
   if (ch == 'l') {
     memory = 'l';
